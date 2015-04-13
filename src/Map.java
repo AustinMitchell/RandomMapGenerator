@@ -38,22 +38,15 @@ public class Map {
 	}
 	
 	private static float[][] generateMap(int depth, float min, float max, float h) {
-		float empty = min-1;
 		
 		int mapSize = (int)Math.pow(2, depth) + 1;
 		float randRange = (max-min)/2;
 		float[][] newMap = new float[mapSize][mapSize];
 		
-		for (int i=0; i<mapSize; i++) {
-			for (int j=0; j<mapSize; j++) {
-				newMap[i][j] = empty;
-			}
-		}	
-		
-		 newMap[0][0] = random(min, max);
-		 newMap[0][mapSize-1] = random(min, max);
-		 newMap[mapSize-1][0] = random(min, max);
-		 newMap[mapSize-1][mapSize-1] = random(min, max);
+		newMap[0][0] = random(min, max);
+		newMap[0][mapSize-1] = random(min, max);
+		newMap[mapSize-1][0] = random(min, max);
+		newMap[mapSize-1][mapSize-1] = random(min, max);
 		
 		for (int n=depth; n>0; n--) {
 			int step = (int)Math.pow(2,n-1);
@@ -73,5 +66,33 @@ public class Map {
 		}
 		
 		return newMap;
+	}
+	
+	public static void shiftMap(int depth, float min, float max, float h, float[][] map) {
+		int mapSize = (int)Math.pow(2, depth) + 1;
+		float randRange = (max-min)/2;
+		
+		map[0][0] = (map[0][0] + random(min, max))/2;
+		map[0][mapSize-1] = (map[0][mapSize-1]+random(min, max))/2;
+		map[mapSize-1][0] = (map[mapSize-1][0] + random(min, max))/2;
+		map[mapSize-1][mapSize-1] = (map[mapSize-1][mapSize-1]+random(min, max))/2;
+		
+		for (int n=depth; n>0; n--) {
+			int step = (int)Math.pow(2,n-1);
+			for (int i=step; i<mapSize-1; i+=step*2) {
+				for (int j=step; j<mapSize-1; j+=step*2) {
+					map[i][j] = (square(i, j, step, min, max, randRange, map) + map[i][j]*3)/4;
+				}
+			}
+			int loopCount = 0;
+			for (int i=0; i<mapSize; i+=step) {
+				for (int j=((loopCount&1)==0?step:0); j<mapSize; j+=step*2) {
+					map[i][j] = (diamond(i, j, step, min, max, randRange, map) + map[i][j]*3)/4;
+				}
+				loopCount += 1;
+			}
+			randRange *= Math.pow(2, -h);
+		}
+		
 	}
 }
