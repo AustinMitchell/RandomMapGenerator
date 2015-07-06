@@ -1,13 +1,12 @@
-import java.awt.Color;
-
 import simple.gui.*;
 import simple.run.*;
+import java.awt.Color;
 
 public class Main extends SimpleGUIApp {
 	public static void main(String[]args) { Main.start(new Main(), "Map Generator"); }
 	public Main() { super(1025, 1025, 30); }
 	
-	static final int depth = 10;
+	static final int depth = 5;
 	static final int size = (int)Math.pow(2, depth) + 1;
 	static final float min = 0;
 	static final float max = 255;
