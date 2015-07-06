@@ -125,11 +125,18 @@ o o o o o o o o o
 This will work with any map of the dimensions specified above. The traversal is quite simple: 
 
 ```java
+
+/** Traversal for the map
+	@param depth		Number of steps to perform, determines map size (1=3x3, 2=5x5, 3=9x9, 4=17x17, etc) 
+	@param min 			Minimum value any point on the map can be
+	@param max 			Maximum value any point on the map can be
+	@param h 			'Roughness' constant; Should be from 0 to 1, 0 gives a rough map and 1 gives a smooth one **/
 private static float[][] generateMap(int depth, float min, float max, float h) {	
-	int mapSize = (int)Math.pow(2, depth) + 1;
-	float randRange = (max-min)/2;
-	float[][] newMap = new float[mapSize][mapSize];
+	int mapSize = (int)Math.pow(2, depth) + 1; 		// Side length of map
+	float randRange = (max-min)/2;					// Possible random range for the current set of points
+	float[][] newMap = new float[mapSize][mapSize];	// Array where the values are mapped
 	
+	// Initializing the corners
 	 newMap[0][0] = random(min, max);
 	 newMap[0][mapSize-1] = random(min, max);
 	 newMap[mapSize-1][0] = random(min, max);
@@ -137,12 +144,14 @@ private static float[][] generateMap(int depth, float min, float max, float h) {
 	
 	for (int n=depth; n>0; n--) {
 		int step = (int)Math.pow(2,n-1);
+		// Square algorithm step
 		for (int i=step; i<mapSize-1; i+=step*2) {
 			for (int j=step; j<mapSize-1; j+=step*2) {
 				newMap[i][j] = square(i, j, step, min, max, randRange, newMap);
 			}
 		}
 		int loopCount = 0;
+		// Diamond algorithm step
 		for (int i=0; i<mapSize; i+=step) {
 			for (int j=((loopCount&1)==0?step:0); j<mapSize; j+=step*2) {
 				newMap[i][j] = diamond(i, j, step, min, max, randRange, newMap);
