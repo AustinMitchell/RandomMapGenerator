@@ -2,6 +2,7 @@ import simple.gui.*;
 import simple.gui.panel.*;
 import simple.run.*;
 import java.awt.Color;
+import java.awt.image.DataBufferInt;
 import java.util.*;;
 
 public class Main extends SimpleGUIApp {
@@ -205,12 +206,24 @@ public class Main extends SimpleGUIApp {
 	
 	// Converts heightmap (expecting min/max values to be 0-255) to a colored image
 	void convertToImage(Image image, Map map) {
+		int[] colorMap = new int[256];
+		for (int i=0; i<256; i++) {
+			colorMap[i] = toFireColor(i);
+		}
+		
+		int[] newImage = new int[size*size];
+		int[] oldImage = ((DataBufferInt)image.getBufferedImage().getRaster().getDataBuffer()).getData();
+		
+		int current = 0;
 		for (int i=0; i<size; i++) {
 			for (int j=0; j<size; j++) {
 				int val = (int)map.get(i, j);
-				image.set(i, j, toFireColor(val));
+				newImage[current+j] = colorMap[val];
 			}
+			current += size;
 		}
+		
+		System.arraycopy(newImage, 0, oldImage, 0, size*size);
 	}
 	
 	// Maps to a general fire-like color pattern
