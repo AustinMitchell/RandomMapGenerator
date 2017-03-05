@@ -1,7 +1,6 @@
-NOTE: this looks way better in a text editor
-NOTE2: To use this project, it requires the .jar file for SimpleGui_V2, which can be found on my github page.
+NOTE: To use this project, it requires the .jar file for SimpleGui_V2, which can be found on my github page. A compatible version is included in the git project.
 
-This is how the square diamond algorithm works:
+This is how the Square-Diamond (i.e. 2D Midpoint Displacement) algorithm works:
 
 First of all, the map size must be (2^n)+1 by (2^n)+1, where n is an integer greater than 0. This means the size of your map can be 2x2, 3x3, 5x5, 9x9, 17x17, 33x33, etc.
 
@@ -66,7 +65,7 @@ o . . . o . . . o
 . . . . . . . . .
 o . . . o . . . o
 ```
-Another square step. Notice it makes a recurring pattern (though this problem is not solved with recursion. Don't do it. Ever).
+Another square step. Notice it makes a recurring pattern. You can use recursion, but the clean solution will end up similar to the iterative pattern anyways, which is faster without having to generate tons of stack frames.
 
 ########################################################
 ```
