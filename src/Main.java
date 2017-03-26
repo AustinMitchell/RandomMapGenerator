@@ -211,19 +211,16 @@ public class Main extends SimpleGUIApp {
 			colorMap[i] = toFireColor(i);
 		}
 		
-		int[] newImage = new int[size*size];
-		int[] oldImage = ((DataBufferInt)image.getBufferedImage().getRaster().getDataBuffer()).getData();
+		int[] imagePixels = image.getPixelsNoCopy();
 		
 		int current = 0;
 		for (int i=0; i<size; i++) {
 			for (int j=0; j<size; j++) {
 				int val = (int)map.get(i, j);
-				newImage[current+j] = colorMap[val];
+				imagePixels[current+j] = colorMap[val];
 			}
 			current += size;
 		}
-		
-		System.arraycopy(newImage, 0, oldImage, 0, size*size);
 	}
 	
 	// Maps to a general fire-like color pattern
