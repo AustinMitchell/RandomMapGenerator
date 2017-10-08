@@ -188,14 +188,14 @@ public class Main extends SimpleGUIApp {
 			
 			image = converterThread.getResult();
 			
-			offsetX = Math.min(getWidth(), Math.max(-size, offsetX-input.mouseOldX()+input.mouseX()));
-			offsetY = Math.min(getHeight(), Math.max(-size, offsetY-input.mouseOldY()+input.mouseY()));
+			offsetX = Math.min(getWidth(), Math.max(-size, offsetX-Input.mouseOldX()+Input.mouseX()));
+			offsetY = Math.min(getHeight(), Math.max(-size, offsetY-Input.mouseOldY()+Input.mouseY()));
 			image.setLocation(offsetX, offsetY);
 		}
 		
-		if (input.mousePressed() && !reset.containsMouse() && !roughnessSlider.containsMouse() && !depthSlider.containsMouse()) {
-			offsetX = Math.min(getWidth(), Math.max(-size, offsetX-input.mouseOldX()+input.mouseX()));
-			offsetY = Math.min(getHeight(), Math.max(-size, offsetY-input.mouseOldY()+input.mouseY()));
+		if (Input.mousePressed() && !reset.containsMouse() && !roughnessSlider.containsMouse() && !depthSlider.containsMouse()) {
+			offsetX = Math.min(getWidth(), Math.max(-size, offsetX-Input.mouseOldX()+Input.mouseX()));
+			offsetY = Math.min(getHeight(), Math.max(-size, offsetY-Input.mouseOldY()+Input.mouseY()));
 			image.setLocation(offsetX, offsetY);
 		}
 		
